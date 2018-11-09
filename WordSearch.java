@@ -55,7 +55,7 @@ public class WordSearch{
         return false;
       }
       boolean canAdd = true;
-      for (int x = 0;x<word.length() ;x++ ) {
+      for (int x = 0;x < word.length() ; x++ ) {
         if(!(data[row][col + x] == '_' || data[row][col + x] == word.charAt(x))){
             canAdd = false;
             return false;
@@ -105,6 +105,18 @@ public class WordSearch{
      *or there are overlapping letters that do not match, then false is returned.
      */
     public boolean addWordDiagonal(String word,int row, int col){
+      if(row > data.length - word.length()|| row < 0 || col < 0 || col > data[0].length - word.length()){
+        return false;
+      }
+      for (int x = 0; x < word.length() ; x++ ) {
+        if(!(data[row + x][col + x] == '_' || data[row + x][col + x] == word.charAt(x))){
+            return false;
+        }
+      }
+      for (int x = 0; x < word.length() ; x++ ) {
+        data[row + x][col + x] = word.charAt(x);
+      }
+      return true;
     }
 
 }
