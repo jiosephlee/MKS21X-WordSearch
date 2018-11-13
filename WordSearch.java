@@ -188,7 +188,7 @@ public class WordSearch{
      */
      private void addAllWords(){
        String added = "" ;
-       int amount = wordsToAdd.lengt();
+       int amount = wordsToAdd.length();
        for (int x = 0; x < amount; x++){
          random = randgen.nextInt() % wordsToAdd.length();
          String add = wordsToAdd.get(random);
