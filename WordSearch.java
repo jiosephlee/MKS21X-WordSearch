@@ -1,8 +1,8 @@
-import java.util.random;
-import java.util.scanner;
-import java.util.arraylist;
-import java.io.file;
-import java.io.filenotfoundexception;
+import java.util.Random;
+import java.util.Scanner;
+import java.util.ArrayList;
+import java.io.File;
+import java.io.FileNotFoundException;
 
 public class WordSearch{
     private char[][]data;
@@ -31,8 +31,12 @@ public class WordSearch{
       data = new char[rows][cols];
       clear();
     }
-    public WordSearch( int rows, int cols, String fileName){}
-    public WordSearch( int rows, int cols, String fileName, int randSeed){}
+    public WordSearch( int rows, int cols, String fileName){
+      randgen = new Random();
+    }
+    public WordSearch( int rows, int cols, String fileName, int randSeed){
+
+    }
 
     /**Set all values in the WordSearch to underscores'_'*/
     private void clear(){
@@ -71,18 +75,15 @@ public class WordSearch{
      * and the board is NOT modified.
      */
     public boolean addWordHorizontal(String word,int row, int col){
-      if(row > data.length -1 || row < 0 || col < 0 || col > data[row].length - word.length()){
+      if(row > data.length - 1 || row < 0 || col < 0 || col > data[row].length - word.length()){
         return false;
       }
-      boolean canAdd = true;
-      for (int x = 0;x < word.length() ; x++ ) {
-        if(!(data[row][col + x] == '_' || data[row][col + x] == word.charAt(x))){
-            canAdd = false;
-            return false;
+      for (int x = 0; x < word.length() ; x++ ) {
+        if (data[row + x][col] == '_'){
+          data[row + x][col] = word.charAt(x);
+        } else if(data[row + x][col] != word.charAt(x)){
+          return false;
         }
-      }
-      for (int x = 0;x<word.length() ;x++ ) {
-          data[row][col + x] = word.charAt(x);
       }
       return true;
     }
@@ -102,15 +103,12 @@ public class WordSearch{
       if(row > data.length - word.length()|| row < 0 || col < 0 || col > data[0].length - 1){
         return false;
       }
-      boolean canAdd = true;
-      for (int x = 0;x<word.length() ;x++ ) {
-        if(!(data[row + x][col] == '_' || data[row + x][col] == word.charAt(x))){
-            canAdd = false;
-            return false;
+      for (int x = 0; x < word.length() ; x++ ) {
+        if (data[row][col - x] == '_'){
+          data[row][col - x] = word.charAt(x);
+        } else if(data[row][col - x] != word.charAt(x)){
+          return false;
         }
-      }
-      for (int x = 0;x<word.length() ;x++ ) {
-        data[row + x][col] = word.charAt(x);
       }
       return true;
     }
@@ -153,6 +151,17 @@ public class WordSearch{
      *        OR there are overlapping letters that do not match
      */
     public boolean addWord(String word,int row, int col, int rowIncrement, int colIncrement){
+      if(row > data.length - word.length()|| row < 0 || col < 0 || col > data[0].length - word.length()){
+        return false;
+      }
+      for (int x = 0; x < word.length() ; x++ ) {
+        if (data[row + (x * rowIncrement)][col + (x * colIncrement)] == '_'){
+          data[row + (x * rowIncrement)][col + (x * colIncrement)] = word.charAt(x);
+        } else if(data[row + (x * rowIncrement)][col + (x * colIncrement)] != word.charAt(x)){
+          return false;
+        }
+      }
+      return true;
     }
 
     /*[rowIncrement,colIncrement] examples:
@@ -160,5 +169,14 @@ public class WordSearch{
      *[ 1,0] would add downwards because (row+1), with no col change
      *[ 0,-1] would add towards the left because (col - 1), with no row change
      */
+     private void addAllWords(){
+       Random rng = new Random();
+       int random = 0;
+       nextInt()
+       for (int x = 0; x < 100; x++){
+         random = rng.nextInt() % wordsToAdd.length()
+         
 
+       }
+     }
 }
