@@ -168,7 +168,7 @@ public class WordSearch{
      *        OR there are overlapping letters that do not match
      */
     public boolean addWord(String word,int row, int col, int rowIncrement, int colIncrement){
-      if(row > data.length - word.length()|| row < 0 || col < 0 || col > data[0].length - word.length()){
+      if(row > data.length - word.length()|| row < 0 || col < 0 || col > data[0].length - word.length() || (rowIncrement == 0 && colIncrement == 0)){
         return false;
       }
       for (int x = 0; x < word.length() ; x++ ) {
@@ -187,15 +187,20 @@ public class WordSearch{
      *[ 0,-1] would add towards the left because (col - 1), with no row change
      */
      private void addAllWords(){
-       Random rng = new Random();
-       int random = 0;
-       String added = "";
-       nextInt()
-       for (int x = 0; x < 200; x++){
-         random = rng.nextInt() % wordsToAdd.length();
-         added = wordsToAdd.get(random);
-         addWord(added,rng.nextInt() % data.length-added.length(),);
-
+       String added = "" ;
+       int amount = wordsToAdd.lengt();
+       for (int x = 0; x < amount; x++){
+         random = randgen.nextInt() % wordsToAdd.length();
+         String add = wordsToAdd.get(random);
+         boolean added = false;
+         for (int i = 0; i < 100 && !added){
+           coldir =
+           added = addWord(add,randgen.nextInt() % data.length-added.length(),);
+         }
+         if (added){
+           wordsAdded.add(add);
+           wordsToAdd.remove(add);
+         }
        }
      }
 
