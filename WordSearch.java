@@ -32,10 +32,27 @@ public class WordSearch{
       clear();
     }
     public WordSearch( int rows, int cols, String fileName){
-      randgen = new Random();
+      Random rng = new Random();
+      seed = rng.nextInt() % 1000;
+      randgen = new Random(seed);
+      data = new char[rows][cols];
+      clear();
+      Scanner words = new Scanner(new File(fileName));
+      while(words.hasNext()){
+        wordsToAdd.add(words.next().toUpperCase());
+      }
+      addAllWords();
     }
     public WordSearch( int rows, int cols, String fileName, int randSeed){
-
+      seed = randSeed;
+      randgen = new Random(seed);
+      data = new char[rows][cols];
+      clear();
+      Scanner words = new Scanner(new File(fileName));
+      while(words.hasNext()){
+        wordsToAdd.add(words.next().toUpperCase());
+      }
+      addAllWords();
     }
 
     /**Set all values in the WordSearch to underscores'_'*/
@@ -172,10 +189,12 @@ public class WordSearch{
      private void addAllWords(){
        Random rng = new Random();
        int random = 0;
+       String added = "";
        nextInt()
-       for (int x = 0; x < 100; x++){
-         random = rng.nextInt() % wordsToAdd.length()
-         
+       for (int x = 0; x < 200; x++){
+         random = rng.nextInt() % wordsToAdd.length();
+         added = wordsToAdd.get(random);
+         addWord(added,rng.nextInt() % data.length-added.length(),);
 
        }
      }
