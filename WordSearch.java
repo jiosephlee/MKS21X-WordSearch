@@ -198,4 +198,20 @@ public class WordSearch{
 
        }
      }
+
+     public String toString(){
+       String output = "";
+       for (int x = 0; x < data.length; x++) {
+         output += "|";
+         for (int i = 0; i < data[x].length ;i++) {
+           output += data[x][i] + " ";
+         }
+         output = output.substring(0,output.length() - 1) + "|\n";
+       }
+       output += "Words: ";
+       for (int i = 0; i < wordsAdded.size(); i++) {
+         output += wordsAdded.get(i) + ", ";
+       }
+       output = output.substring(0,output.length()-2);
+     }
 }
