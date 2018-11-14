@@ -19,10 +19,24 @@ public class WordSearch{
     //all words that were successfully added get moved into wordsAdded.
     private ArrayList<String>wordsAdded;
 
+    public static void main(String[] args) {
+      String[] newArgs = String[5];
+      for (int x = 0;  x < args.length; x++){
+        newArgs[x]=args[x];
+      }
+      if (newArgs.length < 5){
+        newArgs[4] =
+        if (args.length < 4){
+          Random rng = new Random();
+          randseed = rng.nextInt() % 1000;
+
+        }
+      }
+      WordSearch output = new WordSearch(parseInt(newArgs[0]),parseInt(newArgs[1]),newArgs[2],parseInt(newArgs[3]),newArgs[4]);
+      System.out.println(output);
+    }
 
     public WordSearch( int rows, int cols, String fileName){
-      Random rng = new Random();
-      seed = rng.nextInt() % 1000;
       randgen = new Random(seed);
       data = new char[rows][cols];
       clear();
@@ -43,21 +57,12 @@ public class WordSearch{
       }
     }
 
-    public WordSearch( int rows, int cols, String fileName, int randSeed){
+    public WordSearch( int rows, int cols, String fileName, int randSeed, boolean ans){
       seed = randSeed;
       randgen = new Random(seed);
       data = new char[rows][cols];
       clear();
-      try{
-        File f = new File(fileName);
-        Scanner words = new Scanner(f);
-        while(words.hasNext()){
-          wordsToAdd.add(words.next().toUpperCase());
-        }
-      }catch(FileNotFoundException e){
-        System.out.println("File not found: " + fileName);
-        System.exit(1);
-      }
+      extractText(fileName);
       addAllWords();
     }
 
