@@ -26,18 +26,23 @@ public class WordSearch{
       randgen = new Random(seed);
       data = new char[rows][cols];
       clear();
+      extractText(fileName);
+      addAllWords();
+    }
+
+    public void extractText(String filename){
       try{
-        File f = new File(fileName);
+        File f = new File(filename);
         Scanner words = new Scanner(f);
         while(words.hasNext()){
           wordsToAdd.add(words.next().toUpperCase());
         }
       }catch(FileNotFoundException e){
-        System.out.println("File not found: " + fileName);
+        System.out.println("File not found: " + filename);
         System.exit(1);
       }
-      addAllWords();
     }
+
     public WordSearch( int rows, int cols, String fileName, int randSeed){
       seed = randSeed;
       randgen = new Random(seed);
@@ -60,83 +65,9 @@ public class WordSearch{
     private void clear(){
       for (int x =0; x < data.length ; x++ ) {
         for (int y= 0; y < data[x].length ; y++ ) {
-          data[x][y] = '_';
+          data[x][y] = ' ';
         }
       }
-    }
-
-    /**Attempts to add a given word to the specified position of the WordGrid.
-     *The word is added from left to right, must fit on the WordGrid, and must
-     *have a corresponding letter to match any letters that it overlaps.
-     *
-     *@param word is any text to be added to the word grid.
-     *@param row is the vertical locaiton of where you want the word to start.
-     *@param col is the horizontal location of where you want the word to start.
-     *@return true when the word is added successfully. When the word doesn't fit,
-     * or there are overlapping letters that do not match, then false is returned
-     * and the board is NOT modified.
-     */
-    public boolean addWordHorizontal(String word,int row, int col){
-      if(row < 0 || col < 0 || row > data.length - 1 || col > data[row].length - word.length()){
-        return false;
-      }
-      for (int x = 0; x < word.length() ; x++ ) {
-        if (data[row + x][col] == '_'){
-          data[row + x][col] = word.charAt(x);
-        } else if(data[row + x][col] != word.charAt(x)){
-          return false;
-        }
-      }
-      return true;
-    }
-
-   /**Attempts to add a given word to the specified position of the WordGrid.
-     *The word is added from top to bottom, must fit on the WordGrid, and must
-     *have a corresponding letter to match any letters that it overlaps.
-     *
-     *@param word is any text to be added to the word grid.
-     *@param row is the vertical locaiton of where you want the word to start.
-     *@param col is the horizontal location of where you want the word to start.
-     *@return true when the word is added successfully. When the word doesn't fit,
-     *or there are overlapping letters that do not match, then false is returned.
-     *and the board is NOT modified.
-     */
-    public boolean addWordVertical(String word,int row, int col){
-      if(row < 0 || col < 0 || row > data.length - word.length()|| col > data[0].length - 1){
-        return false;
-      }
-      for (int x = 0; x < word.length() ; x++ ) {
-        if (data[row][col - x] == '_'){
-          data[row][col - x] = word.charAt(x);
-        } else if(data[row][col - x] != word.charAt(x)){
-          return false;
-        }
-      }
-      return true;
-    }
-    /**Attempts to add a given word to the specified position of the WordGrid.
-     *The word is added from top left to bottom right, must fit on the WordGrid,
-     *and must have a corresponding letter to match any letters that it overlaps.
-     *
-     *@param word is any text to be added to the word grid.
-     *@param row is the vertical locaiton of where you want the word to start.
-     *@param col is the horizontal location of where you want the word to start.
-     *@return true when the word is added successfully. When the word doesn't fit,
-     *or there are overlapping letters that do not match, then false is returned.
-     */
-    public boolean addWordDiagonal(String word,int row, int col){
-      if(row < 0 || col < 0 || row > data.length - word.length()|| col > data[0].length - word.length()){
-        return false;
-      }
-      for (int x = 0; x < word.length() ; x++ ) {
-        if(!(data[row + x][col + x] == '_' || data[row + x][col + x] == word.charAt(x))){
-            return false;
-        }
-      }
-      for (int x = 0; x < word.length() ; x++ ) {
-        data[row + x][col + x] = word.charAt(x);
-      }
-      return true;
     }
 
     /**Attempts to add a given word to the specified position of the WordGrid.
