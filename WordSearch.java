@@ -19,18 +19,7 @@ public class WordSearch{
     //all words that were successfully added get moved into wordsAdded.
     private ArrayList<String>wordsAdded;
 
-    /**Initialize the grid to the size specified
-     *and fill all of the positions with '_'
-     *@param row is the starting height of the WordSearch
-     *@param col is the starting width of the WordSearch
-     */
-    public WordSearch(int rows,int cols){
-      if (rows < 0 || cols < 0){
-        throw new IllegalArgumentException();
-      }
-      data = new char[rows][cols];
-      clear();
-    }
+
     public WordSearch( int rows, int cols, String fileName){
       Random rng = new Random();
       seed = rng.nextInt() % 1000;
@@ -182,7 +171,7 @@ public class WordSearch{
      *[ 1,0] would add downwards because (row+1), with no col change
      *[ 0,-1] would add towards the left because (col - 1), with no row change
      */
-     private void addAllWords(){
+     public void addAllWords(){
        boolean added = false;
        int amount = wordsToAdd.size();
        ArrayList<int[]> directions = new ArrayList<int[]>();
