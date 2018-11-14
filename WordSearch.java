@@ -64,22 +64,6 @@ public class WordSearch{
       }
     }
 
-    /**Each row is a new line, there is a space between each letter
-     *@return a String with each character separated by spaces, and rows
-     *separated by newlines.
-     */
-    public String toString(){
-      String output = "";
-      for (int x =0; x < data.length ; x++ ) {
-        for (int y= 0; y < data[x].length ; y++ ) {
-          output += data[x][y] + ' ';
-        }
-        output += "\\n";
-      }
-      return output;
-    }
-
-
     /**Attempts to add a given word to the specified position of the WordGrid.
      *The word is added from left to right, must fit on the WordGrid, and must
      *have a corresponding letter to match any letters that it overlaps.
@@ -92,7 +76,7 @@ public class WordSearch{
      * and the board is NOT modified.
      */
     public boolean addWordHorizontal(String word,int row, int col){
-      if(row > data.length - 1 || row < 0 || col < 0 || col > data[row].length - word.length()){
+      if(row < 0 || col < 0 || row > data.length - 1 || col > data[row].length - word.length()){
         return false;
       }
       for (int x = 0; x < word.length() ; x++ ) {
@@ -117,7 +101,7 @@ public class WordSearch{
      *and the board is NOT modified.
      */
     public boolean addWordVertical(String word,int row, int col){
-      if(row > data.length - word.length()|| row < 0 || col < 0 || col > data[0].length - 1){
+      if(row < 0 || col < 0 || row > data.length - word.length()|| col > data[0].length - 1){
         return false;
       }
       for (int x = 0; x < word.length() ; x++ ) {
@@ -140,7 +124,7 @@ public class WordSearch{
      *or there are overlapping letters that do not match, then false is returned.
      */
     public boolean addWordDiagonal(String word,int row, int col){
-      if(row > data.length - word.length()|| row < 0 || col < 0 || col > data[0].length - word.length()){
+      if(row < 0 || col < 0 || row > data.length - word.length()|| col > data[0].length - word.length()){
         return false;
       }
       for (int x = 0; x < word.length() ; x++ ) {
@@ -168,7 +152,7 @@ public class WordSearch{
      *        OR there are overlapping letters that do not match
      */
     public boolean addWord(String word,int row, int col, int rowIncrement, int colIncrement){
-      if(row > data.length - word.length()|| row < 0 || col < 0 || col > data[0].length - word.length() || (rowIncrement == 0 && colIncrement == 0)){
+      if(row < 0 || col < 0 || row > data.length - word.length()|| col > data[0].length - word.length() || (rowIncrement == 0 && colIncrement == 0)){
         return false;
       }
       for (int x = 0; x < word.length() ; x++ ) {
@@ -187,20 +171,36 @@ public class WordSearch{
      *[ 0,-1] would add towards the left because (col - 1), with no row change
      */
      private void addAllWords(){
-       String added = "" ;
-       int amount = wordsToAdd.length();
+       boolean added = false;
+       int amount = wordsToAdd.size();
+       ArrayList<int[]> directions = new ArrayList<int[]>();
+       for (int x = -1 , y = 1; x < 2; x++ , y--){
+         if (x != y){
+           int[] dir = {x,y};
+           directions.add(dir);
+         }
+       }
+       int prevcol = 0;
+       int prevrow = 0;
+
        for (int x = 0; x < amount; x++){
-         random = randgen.nextInt() % wordsToAdd.length();
-         String add = wordsToAdd.get(random);
-         boolean added = false;
-         for (int i = 0; i < 100 && !added){
-           coldir =
-           added = addWord(add,randgen.nextInt() % data.length-added.length(),);
+         int[] previous = {prevcol,prevrow};
+         directions.remove(previous);
+         String Toadd = wordsToAdd.get(randgen.nextInt() % wordsToAdd.size());
+         int randcoldir = directions.get(randgen.nextInt(directions.size()))[1];
+         prevcol = randcoldir;
+         int randrowdir = directions.get(randgen.nextInt(directions.size()))[0];
+         prevrow = randrowdir;
+         added = false;
+         for (int i = 0; i < 100 && !added; i++){
+           int randcol = randgen.nextInt(data[0].length);
+           added = addWord(Toadd,randrow,randcol,randrowdir,randcoldir);
          }
          if (added){
-           wordsAdded.add(add);
-           wordsToAdd.remove(add);
+           wordsAdded.add(Toadd);
+           wordsToAdd.remove(Toadd);
          }
+         directions.add(previous);
        }
      }
 
