@@ -37,9 +37,15 @@ public class WordSearch{
       randgen = new Random(seed);
       data = new char[rows][cols];
       clear();
-      Scanner words = new Scanner(new File(fileName));
-      while(words.hasNext()){
-        wordsToAdd.add(words.next().toUpperCase());
+      try{
+        File f = new File(fileName);
+        Scanner words = new Scanner(f);
+        while(words.hasNext()){
+          wordsToAdd.add(words.next().toUpperCase());
+        }
+      }catch(FileNotFoundException e){
+        System.out.println("File not found: " + fileName);
+        System.exit(1);
       }
       addAllWords();
     }
@@ -48,9 +54,15 @@ public class WordSearch{
       randgen = new Random(seed);
       data = new char[rows][cols];
       clear();
-      Scanner words = new Scanner(new File(fileName));
-      while(words.hasNext()){
-        wordsToAdd.add(words.next().toUpperCase());
+      try{
+        File f = new File(fileName);
+        Scanner words = new Scanner(f);
+        while(words.hasNext()){
+          wordsToAdd.add(words.next().toUpperCase());
+        }
+      }catch(FileNotFoundException e){
+        System.out.println("File not found: " + fileName);
+        System.exit(1);
       }
       addAllWords();
     }
@@ -194,6 +206,7 @@ public class WordSearch{
          added = false;
          for (int i = 0; i < 100 && !added; i++){
            int randcol = randgen.nextInt(data[0].length);
+           int randrow = randgen.nextInt(data.length);
            added = addWord(Toadd,randrow,randcol,randrowdir,randcoldir);
          }
          if (added){
@@ -218,5 +231,6 @@ public class WordSearch{
          output += wordsAdded.get(i) + ", ";
        }
        output = output.substring(0,output.length()-2);
+       return output;
      }
 }
