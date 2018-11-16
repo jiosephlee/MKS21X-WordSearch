@@ -20,23 +20,22 @@ public class WordSearch{
     private ArrayList<String>wordsAdded;
 
     public static void main(String[] args) {
-      String[] newArgs = String[5];
+      String[] newArgs = new String[5];
       for (int x = 0;  x < args.length; x++){
         newArgs[x]=args[x];
       }
       if (newArgs.length < 5){
-        newArgs[4] =
+        newArgs[5] = "nokey";
         if (args.length < 4){
           Random rng = new Random();
-          randseed = rng.nextInt() % 1000;
-
+          newArgs[4] = Integer.toString(rng.nextInt()%1000);
         }
       }
-      WordSearch output = new WordSearch(parseInt(newArgs[0]),parseInt(newArgs[1]),newArgs[2],parseInt(newArgs[3]),newArgs[4]);
+      WordSearch output = new WordSearch(Integer.parseInt(newArgs[0]),Integer.parseInt(newArgs[1]),newArgs[2],Integer.parseInt(newArgs[3]),newArgs[4]);
       System.out.println(output);
     }
 
-    public WordSearch( int rows, int cols, String fileName){
+    public WordSearch(int rows, int cols, String fileName) throws FileNotFoundException{
       randgen = new Random(seed);
       data = new char[rows][cols];
       clear();
@@ -45,19 +44,14 @@ public class WordSearch{
     }
 
     public void extractText(String filename){
-      try{
         File f = new File(filename);
         Scanner words = new Scanner(f);
         while(words.hasNext()){
           wordsToAdd.add(words.next().toUpperCase());
-        }
-      }catch(FileNotFoundException e){
-        System.out.println("File not found: " + filename);
-        System.exit(1);
       }
     }
 
-    public WordSearch( int rows, int cols, String fileName, int randSeed, boolean ans){
+    public WordSearch( int rows, int cols, String fileName, int randSeed, String ans){
       seed = randSeed;
       randgen = new Random(seed);
       data = new char[rows][cols];
