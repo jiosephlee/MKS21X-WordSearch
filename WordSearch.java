@@ -19,39 +19,32 @@ public class WordSearch{
     //all words that were successfully added get moved into wordsAdded.
     private ArrayList<String>wordsAdded;
 
-    public static void main(String[] args) {
+    public static void main(String[] args){
+      //handle main arguments
+      if (args.length < 3){
+
+      }
       String[] newArgs = new String[5];
       for (int x = 0;  x < args.length; x++){
         newArgs[x]=args[x];
       }
-      if (newArgs.length < 5){
-        newArgs[5] = "nokey";
+      if (args.length < 5){
+        newArgs[4] = "nokey";
         if (args.length < 4){
           Random rng = new Random();
-          newArgs[4] = Integer.toString(rng.nextInt()%1000);
+          newArgs[3] = Integer.toString(rng.nextInt(10001));
         }
       }
-      WordSearch output = new WordSearch(Integer.parseInt(newArgs[0]),Integer.parseInt(newArgs[1]),newArgs[2],Integer.parseInt(newArgs[3]),newArgs[4]);
-      System.out.println(output);
-    }
-
-    public WordSearch(int rows, int cols, String fileName) throws FileNotFoundException{
-      randgen = new Random(seed);
-      data = new char[rows][cols];
-      clear();
-      extractText(fileName);
-      addAllWords();
-    }
-
-    public void extractText(String filename){
-        File f = new File(filename);
-        Scanner words = new Scanner(f);
-        while(words.hasNext()){
-          wordsToAdd.add(words.next().toUpperCase());
+      System.out.println(newArgs[0] + newArgs[1] + newArgs[2] + newArgs[3] + newArgs[4]);
+      try{
+        WordSearch output = new WordSearch(Integer.parseInt(newArgs[0]),Integer.parseInt(newArgs[1]),newArgs[2],Integer.parseInt(newArgs[3]),newArgs[4]);
+        System.out.println(output);
+      } catch (FileNotFoundException e) {
+        printError();
       }
     }
 
-    public WordSearch( int rows, int cols, String fileName, int randSeed, String ans){
+    public WordSearch( int rows, int cols, String fileName, int randSeed, String ans) throws FileNotFoundException{
       seed = randSeed;
       randgen = new Random(seed);
       data = new char[rows][cols];
@@ -60,6 +53,21 @@ public class WordSearch{
       addAllWords();
     }
 
+    public void extractText(String filename) throws FileNotFoundException{
+        File f = new File(filename);
+        Scanner words = new Scanner(f);
+        while(words.hasNext()){
+          System.out.println(wordsToAdd);
+          String line = words.nextLine();
+          line.toUpperCase();
+          System.out.println(line);
+          wordsToAdd.add(line);
+      }
+    }
+
+    public static void printError(){
+      System.out.println("An error has occured. \\n 1. Please make sure at least 3 command line arguments are specified when running the program. \\n 2. The file that is called exists within the same directory of the program file. \\n 3. All numerical arguments are properly formatted and in range. row and col should be positive and the ranged of the seed should be between 0 and 10,000 (inclusive).");
+    }
     /**Set all values in the WordSearch to underscores'_'*/
     private void clear(){
       for (int x =0; x < data.length ; x++ ) {
