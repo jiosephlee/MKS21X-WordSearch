@@ -5,7 +5,18 @@ import java.io.File;
 import java.io.FileNotFoundException;
 
 public class WordSearch{
-    private char[][]data;
+    private char[][]data = {
+      {'y','yo","yo","yo","yo","yo","yo","yo","yo","yo"},
+      {"yo","yo","yo","yo","yo","yo","yo","yo","yo","yo"},
+      {"yo","yo","yo","yo","yo","yo","yo","yo","yo","yo"},
+      {"yo","yo","yo","yo","yo","yo","yo","yo","yo","yo"},
+      {"yo","yo","yo","yo","yo","yo","yo","yo","yo","yo"},
+      {"yo","yo","yo","yo","yo","yo","yo","yo","yo","yo"},
+      {"yo","yo","yo","yo","yo","yo","yo","yo","yo","yo"},
+      {"yo","yo","yo","yo","yo","yo","yo","yo","yo","yo"},
+      {"yo","yo","yo","yo","yo","yo","yo","yo","yo","yo"},
+      {"yo","yo","yo","yo","yo","yo","yo","yo","yo","yo"}
+    };
 
     //the random seed used to produce this WordSearch
     private int seed;
@@ -48,7 +59,7 @@ public class WordSearch{
       wordsToAdd = new ArrayList<String>();
       wordsAdded = new ArrayList<String>();
       randgen = new Random(seed);
-      data = new char[rows][cols];
+      //data = new char[rows][cols];
       clear();
       extractText(fileName);
       addAllWords();
