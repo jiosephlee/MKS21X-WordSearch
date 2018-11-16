@@ -35,7 +35,6 @@ public class WordSearch{
           newArgs[3] = Integer.toString(rng.nextInt(10001));
         }
       }
-      System.out.println(newArgs[0] + newArgs[1] + newArgs[2] + newArgs[3] + newArgs[4]);
       try{
         WordSearch output = new WordSearch(Integer.parseInt(newArgs[0]),Integer.parseInt(newArgs[1]),newArgs[2],Integer.parseInt(newArgs[3]),newArgs[4]);
         System.out.println(output);
@@ -46,6 +45,8 @@ public class WordSearch{
 
     public WordSearch( int rows, int cols, String fileName, int randSeed, String ans) throws FileNotFoundException{
       seed = randSeed;
+      wordsToAdd = new ArrayList<String>();
+      wordsAdded = new ArrayList<String>();
       randgen = new Random(seed);
       data = new char[rows][cols];
       clear();
@@ -57,10 +58,7 @@ public class WordSearch{
         File f = new File(filename);
         Scanner words = new Scanner(f);
         while(words.hasNext()){
-          System.out.println(wordsToAdd);
-          String line = words.nextLine();
-          line.toUpperCase();
-          System.out.println(line);
+          String line = words.nextLine().toUpperCase();
           wordsToAdd.add(line);
       }
     }
@@ -125,7 +123,7 @@ public class WordSearch{
        for (int x = 0; x < amount; x++){
          int[] previous = {prevcol,prevrow};
          directions.remove(previous);
-         String Toadd = wordsToAdd.get(randgen.nextInt() % wordsToAdd.size());
+         String Toadd = wordsToAdd.get(Math.abs(randgen.nextInt()) % wordsToAdd.size());
          int randcoldir = directions.get(randgen.nextInt(directions.size()))[1];
          prevcol = randcoldir;
          int randrowdir = directions.get(randgen.nextInt(directions.size()))[0];
