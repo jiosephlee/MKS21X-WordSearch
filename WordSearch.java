@@ -1,22 +1,12 @@
 import java.util.Random;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.io.File;
 import java.io.FileNotFoundException;
 
 public class WordSearch{
-    private char[][]data = {
-      {'y','yo","yo","yo","yo","yo","yo","yo","yo","yo"},
-      {"yo","yo","yo","yo","yo","yo","yo","yo","yo","yo"},
-      {"yo","yo","yo","yo","yo","yo","yo","yo","yo","yo"},
-      {"yo","yo","yo","yo","yo","yo","yo","yo","yo","yo"},
-      {"yo","yo","yo","yo","yo","yo","yo","yo","yo","yo"},
-      {"yo","yo","yo","yo","yo","yo","yo","yo","yo","yo"},
-      {"yo","yo","yo","yo","yo","yo","yo","yo","yo","yo"},
-      {"yo","yo","yo","yo","yo","yo","yo","yo","yo","yo"},
-      {"yo","yo","yo","yo","yo","yo","yo","yo","yo","yo"},
-      {"yo","yo","yo","yo","yo","yo","yo","yo","yo","yo"}
-    };
+    private char[][]data;
 
     //the random seed used to produce this WordSearch
     private int seed;
@@ -55,16 +45,22 @@ public class WordSearch{
     }
 
     public WordSearch( int rows, int cols, String fileName, int randSeed, String ans) throws FileNotFoundException{
+
       seed = randSeed;
       wordsToAdd = new ArrayList<String>();
       wordsAdded = new ArrayList<String>();
       randgen = new Random(seed);
-      //data = new char[rows][cols];
+      data = new char[rows][cols];
       clear();
       extractText(fileName);
       addAllWords();
     }
+    public WordSearch( int rows, int cols){
 
+      data = new char[rows][cols];
+      clear();
+
+    }
     public void extractText(String filename) throws FileNotFoundException{
         File f = new File(filename);
         Scanner words = new Scanner(f);
@@ -100,11 +96,11 @@ public class WordSearch{
      *        OR there are overlapping letters that do not match
      */
     public boolean addWord(String word,int row, int col, int rowIncrement, int colIncrement){
-      if(row < 0 || col < 0 || row > data.length - word.length()|| col > data[0].length - word.length() || (rowIncrement == 0 && colIncrement == 0)){
+      if(row + (rowIncrement * word.length()) < 0 || col + (colIncrement * word.length()) < 0 || row + (rowIncrement * word.length()) > data.length || col + (colIncrement * word.length()) > data[0].length || (rowIncrement == 0 && colIncrement == 0)){
         return false;
       }
       for (int x = 0; x < word.length() ; x++ ) {
-        if (data[row + (x * rowIncrement)][col + (x * colIncrement)] == '_'){
+        if (data[row + (x * rowIncrement)][col + (x * colIncrement)] == ' '){
           data[row + (x * rowIncrement)][col + (x * colIncrement)] = word.charAt(x);
         } else if(data[row + (x * rowIncrement)][col + (x * colIncrement)] != word.charAt(x)){
           return false;
@@ -122,18 +118,21 @@ public class WordSearch{
        boolean added = false;
        int amount = wordsToAdd.size();
        ArrayList<int[]> directions = new ArrayList<int[]>();
-       for (int x = -1 , y = 1; x < 2; x++ , y--){
-         if (x != y){
-           int[] dir = {x,y};
-           directions.add(dir);
+       for (int x = -1; x < 2; x++){
+         for(int y = -1; y < 2; y++){
+           if (!(x == 0 && y == 0)){
+             int[] dir = {x,y};
+             directions.add(dir);
+           }
          }
        }
-       int prevcol = 0;
+       int prevcol = 1;
        int prevrow = 0;
-
+       int[] previous = new int[2];
        for (int x = 0; x < amount; x++){
-         int[] previous = {prevcol,prevrow};
-         directions.remove(previous);
+         previous[0] = prevrow;
+         previous[1] = prevcol;
+         System.out.println(directions.remove(previous));
          String Toadd = wordsToAdd.get(Math.abs(randgen.nextInt()) % wordsToAdd.size());
          int randcoldir = directions.get(randgen.nextInt(directions.size()))[1];
          prevcol = randcoldir;
@@ -144,6 +143,7 @@ public class WordSearch{
            int randcol = randgen.nextInt(data[0].length);
            int randrow = randgen.nextInt(data.length);
            added = addWord(Toadd,randrow,randcol,randrowdir,randcoldir);
+           //System.out.println(Toadd + i);
          }
          if (added){
            wordsAdded.add(Toadd);
