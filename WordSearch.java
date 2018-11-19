@@ -22,8 +22,9 @@ public class WordSearch{
 
     public static void main(String[] args){
       //handle main arguments
-      if (args.length < 3){
-
+      if (args.length < 3 || Integer.parseInt(args[0]) < 0 || Integer.parseInt(args[1]) < 0 || Integer.parseInt(args[3]) > 10000){
+        printError();
+        return;
       }
       String[] newArgs = new String[5];
       for (int x = 0;  x < args.length; x++){
@@ -71,7 +72,7 @@ public class WordSearch{
     }
 
     public static void printError(){
-      System.out.println("An error has occured. \\n 1. Please make sure at least 3 command line arguments are specified when running the program. \\n 2. The file that is called exists within the same directory of the program file. \\n 3. All numerical arguments are properly formatted and in range. row and col should be positive and the ranged of the seed should be between 0 and 10,000 (inclusive).");
+      System.out.println("An error has occured." + "\n" + "1. Please make sure at least 3 command line arguments are specified when running the program." + "\n" + "2. The file that is called exists within the same directory of the program file." + "\n" + "3. All numerical arguments are properly formatted and in range. row and col should be positive and the ranged of the seed should be between 0 and 10,000 (inclusive).");
     }
     /**Set all values in the WordSearch to underscores'_'*/
     private void clear(){
@@ -149,7 +150,6 @@ public class WordSearch{
          }
 
          directions.add(directions.get(addback));
-         System.out.println();
        }
      }
 
