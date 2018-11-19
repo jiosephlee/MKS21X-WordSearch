@@ -133,6 +133,9 @@ public class WordSearch{
          previous[0] = prevrow;
          previous[1] = prevcol;
          System.out.println(directions.remove(previous));
+         for (int i = 0; i < directions.size(); i++){
+           System.out.print(Arrays.toString(directions.get(i)));
+         }
          String Toadd = wordsToAdd.get(Math.abs(randgen.nextInt()) % wordsToAdd.size());
          int randcoldir = directions.get(randgen.nextInt(directions.size()))[1];
          prevcol = randcoldir;
