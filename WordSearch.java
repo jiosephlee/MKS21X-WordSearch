@@ -132,11 +132,8 @@ public class WordSearch{
        for (int x = 0; x < amount; x++){
          previous[0] = prevrow;
          previous[1] = prevcol;
-         for (int i = 0; i < directions.size(); i++){
-           System.out.print(Arrays.toString(directions.get(i)));
-         }
 
-         System.out.println(directions.remove(previous));
+         System.out.println("\n" + Arrays.toString(previous) + "removed?" + directions.remove(previous));
 
          String Toadd = wordsToAdd.get(Math.abs(randgen.nextInt()) % wordsToAdd.size());
          int randcoldir = directions.get(randgen.nextInt(directions.size()))[1];
@@ -154,8 +151,20 @@ public class WordSearch{
            wordsAdded.add(Toadd);
            wordsToAdd.remove(Toadd);
          }
-         System.out.println(Arrays.toString(previous));
-         System.out.println(directions.add(previous));
+
+         System.out.println("before adding: ");
+         for (int i = 0; i < directions.size(); i++){
+           System.out.print(Arrays.toString(directions.get(i)));
+         }
+         if (x != 0){
+           System.out.println("what is added: " + Arrays.toString(previous));
+           System.out.println( "\n" + "added? " + directions.add(previous));
+         }
+         System.out.println("after adding ");
+         for (int i = 0; i < directions.size(); i++){
+           System.out.print(Arrays.toString(directions.get(i)));
+         }
+
        }
      }
 
