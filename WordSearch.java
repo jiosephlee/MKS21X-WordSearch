@@ -1,9 +1,5 @@
-import java.util.Random;
-import java.util.Scanner;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.util.*;
+import java.io.*;
 
 public class WordSearch{
     private char[][]data;
@@ -22,12 +18,12 @@ public class WordSearch{
 
     public static void main(String[] args){
       //handle main arguments
-      if (args.length < 3 || Integer.parseInt(args[0]) < 0 || Integer.parseInt(args[1]) < 0 || Integer.parseInt(args[3]) > 10000){
+      if (args.length < 3){
         printError();
         return;
       }
       String[] newArgs = new String[5];
-      for (int x = 0;  x < args.length; x++){
+      for (int x = 0;  x < args.length && x < 5; x++){
         newArgs[x]=args[x];
       }
       if (args.length < 5){
@@ -35,12 +31,21 @@ public class WordSearch{
         if (args.length < 4){
           Random rng = new Random();
           newArgs[3] = Integer.toString(rng.nextInt(10001));
+        } else{
+          if (Integer.parseInt(args[3]) > 10000){
+            printError();
+            return;
+          }
         }
       }
       try{
         WordSearch output = new WordSearch(Integer.parseInt(newArgs[0]),Integer.parseInt(newArgs[1]),newArgs[2],Integer.parseInt(newArgs[3]),newArgs[4]);
         System.out.println(output);
       } catch (FileNotFoundException e) {
+        printError();
+      } catch (NumberFormatException e) {
+        printError();
+      } catch (NegativeArraySizeException e){
         printError();
       }
     }
@@ -55,6 +60,9 @@ public class WordSearch{
       clear();
       extractText(fileName);
       addAllWords();
+      if (!ans.equals("key")){
+        fill();
+      }
     }
     public WordSearch( int rows, int cols){
 
@@ -82,6 +90,16 @@ public class WordSearch{
         }
       }
     }
+
+    private void fill(){
+    for (int x = 0; x < data.length ;x++ ) {
+      for (int y = 0; y < data[0].length ;y++ ) {
+        if(data[x][y] == ' '){
+          data[x][y] = (char)(((int) 'A') + randgen.nextInt(26));
+        }
+      }
+    }
+  }
 
     /**Attempts to add a given word to the specified position of the WordGrid.
      *The word is added in the direction rowIncrement,colIncrement
@@ -166,7 +184,7 @@ public class WordSearch{
        for (int i = 0; i < wordsAdded.size(); i++) {
          output += wordsAdded.get(i) + ", ";
        }
-       output = output.substring(0,output.length()-2);
+       output = output.substring(0,output.length()-2) + " (seed: " + seed + ")";
        return output;
      }
 }
