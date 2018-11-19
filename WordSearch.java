@@ -100,11 +100,12 @@ public class WordSearch{
         return false;
       }
       for (int x = 0; x < word.length() ; x++ ) {
-        if (data[row + (x * rowIncrement)][col + (x * colIncrement)] == ' '){
-          data[row + (x * rowIncrement)][col + (x * colIncrement)] = word.charAt(x);
-        } else if(data[row + (x * rowIncrement)][col + (x * colIncrement)] != word.charAt(x)){
+        if(data[row + (x * rowIncrement)][col + (x * colIncrement)] != word.charAt(x) && data[row + (x * rowIncrement)][col + (x * colIncrement)] != ' '){
           return false;
         }
+      }
+      for (int x = 0; x < word.length() ; x++ ) {
+        data[row + (x * rowIncrement)][col + (x * colIncrement)] = word.charAt(x);
       }
       return true;
     }
@@ -137,11 +138,10 @@ public class WordSearch{
          int randcoldir = directions.get(used)[1];
          int randrowdir = directions.get(used)[0];
          added = false;
-         for (int i = 0; i < 100 && !added; i++){
+         for (int i = 0; i < 50 && !added; i++){
            int randcol = randgen.nextInt(data[0].length);
            int randrow = randgen.nextInt(data.length);
            added = addWord(Toadd,randrow,randcol,randrowdir,randcoldir);
-           //System.out.println(Toadd + i);
          }
          if (added){
            wordsAdded.add(Toadd);
