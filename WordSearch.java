@@ -151,18 +151,16 @@ public class WordSearch{
            wordsAdded.add(Toadd);
            wordsToAdd.remove(Toadd);
          }
-
+         System.out.println("what is added: " + Arrays.toString(previous));
          System.out.println("before adding: ");
          for (int i = 0; i < directions.size(); i++){
            System.out.print(Arrays.toString(directions.get(i)));
          }
-         if (x != 0){
-           System.out.println("what is added: " + Arrays.toString(previous));
-           System.out.println( "\n" + "added? " + directions.add(previous));
-         }
+         System.out.println( "\n" + "added? " + directions.add(previous));
          System.out.println("after adding ");
          for (int i = 0; i < directions.size(); i++){
            System.out.print(Arrays.toString(directions.get(i)));
+         System.out.println();
          }
 
        }
