@@ -126,20 +126,16 @@ public class WordSearch{
            }
          }
        }
-       int prevcol = 0;
-       int prevrow = 0;
-       int[] previous = new int[2];
+       int used = 0;
+       int addback = 0;
        for (int x = 0; x < amount; x++){
-         previous[0] = prevrow;
-         previous[1] = prevcol;
-
-         System.out.println("\n" + Arrays.toString(previous) + "removed?" + directions.remove(previous));
+         directions.remove(used);
+         addback = used;
 
          String Toadd = wordsToAdd.get(Math.abs(randgen.nextInt()) % wordsToAdd.size());
-         int randcoldir = directions.get(randgen.nextInt(directions.size()))[1];
-         prevcol = randcoldir;
-         int randrowdir = directions.get(randgen.nextInt(directions.size()))[0];
-         prevrow = randrowdir;
+         used=randgen.nextInt(directions.size());
+         int randcoldir = directions.get(used)[1];
+         int randrowdir = directions.get(used)[0];
          added = false;
          for (int i = 0; i < 100 && !added; i++){
            int randcol = randgen.nextInt(data[0].length);
@@ -151,18 +147,9 @@ public class WordSearch{
            wordsAdded.add(Toadd);
            wordsToAdd.remove(Toadd);
          }
-         System.out.println("what is added: " + Arrays.toString(previous));
-         System.out.println("before adding: ");
-         for (int i = 0; i < directions.size(); i++){
-           System.out.print(Arrays.toString(directions.get(i)));
-         }
-         System.out.println( "\n" + "added? " + directions.add(previous));
-         System.out.println("after adding ");
-         for (int i = 0; i < directions.size(); i++){
-           System.out.print(Arrays.toString(directions.get(i)));
-         System.out.println();
-         }
 
+         directions.add(directions.get(addback));
+         System.out.println();
        }
      }
 
